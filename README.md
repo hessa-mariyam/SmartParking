@@ -1,6 +1,8 @@
 # Smart Parking System
 
 A C++ application for managing vehicle records and optimizing parking revenue.
+Team Members : Gouri Nanda K G
+
 
 ## Features
 
