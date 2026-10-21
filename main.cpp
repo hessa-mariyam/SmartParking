@@ -15,6 +15,11 @@ struct Vehicle
 
 unordered_map<string, Vehicle> vehicleHash;
 
+int calculateFee(int duration)
+{
+    return duration * 100;
+}
+
 void addVehicle(vector<Vehicle>& v)
 {
     Vehicle x;
@@ -34,21 +39,23 @@ void addVehicle(vector<Vehicle>& v)
     cout << "Enter Parking Duration (hours): ";
     cin >> x.duration;
 
-    cout << "Enter Parking Fee (Rs): ";
-    cin >> x.fee;
-
     if (x.arrival < 0 || x.arrival > 23 ||
-        x.duration <= 0 || x.fee < 0)
+        x.duration <= 0)
     {
         cout << "Invalid input!\n";
         return;
     }
 
+  
+    x.fee = calculateFee(x.duration);
+
     v.push_back(x);
     vehicleHash[x.regNo] = x;
 
     cout << "Vehicle Added Successfully!\n";
+    cout << "Parking Fee: Rs " << x.fee << endl;
 }
+
 
 void searchVehicle(vector<Vehicle>& v)
 {
@@ -74,6 +81,7 @@ void searchVehicle(vector<Vehicle>& v)
     cout << "Parking Fee: Rs " << x.fee << endl;
 }
 
+
 void displayVehicles(vector<Vehicle>& v)
 {
     if (v.empty())
@@ -93,6 +101,7 @@ void displayVehicles(vector<Vehicle>& v)
     }
 }
 
+
 void sortByArrival(vector<Vehicle>& v)
 {
     sort(v.begin(), v.end(),
@@ -105,6 +114,7 @@ void sortByArrival(vector<Vehicle>& v)
     displayVehicles(v);
 }
 
+
 void sortByDuration(vector<Vehicle>& v)
 {
     sort(v.begin(), v.end(),
@@ -116,6 +126,7 @@ void sortByDuration(vector<Vehicle>& v)
     cout << "\nSorted by Parking Duration:\n";
     displayVehicles(v);
 }
+
 
 void allocateParking(vector<Vehicle>& v)
 {
@@ -138,6 +149,7 @@ void allocateParking(vector<Vehicle>& v)
 
     int n = v.size();
 
+   
     vector<vector<int>> dp(
         n + 1, vector<int>(capacity + 1, 0));
 
@@ -145,8 +157,10 @@ void allocateParking(vector<Vehicle>& v)
     {
         for (int j = 0; j <= capacity; j++)
         {
+            
             dp[i][j] = dp[i - 1][j];
 
+            
             if (v[i - 1].duration <= j)
             {
                 dp[i][j] = max(
@@ -247,3 +261,4 @@ int main()
 
     return 0;
 }
+
